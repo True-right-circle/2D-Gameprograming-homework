@@ -1,6 +1,6 @@
-from pico2d import*
 import game_framework
 import title_state
+from pico2d import*
 
 name='StartState'
 image=None
@@ -38,3 +38,6 @@ def handle_events():
     pass
 def pause():
     pass
+def resume():
+    pass
+

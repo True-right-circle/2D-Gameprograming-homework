@@ -1,6 +1,6 @@
-from pico2d import*
 import game_framework
 import main_state
+from pico2d import*
 
 name ='TitleState'
 image=None
@@ -31,4 +31,7 @@ def draw():
 
 def update():
     pass
-            
+def pause():
+    pass
+def resume():
+    pass
