@@ -1,5 +1,10 @@
 # 2D-Gameprograming
 2D gameprograming
+
+homework => 과제 commit
+
+Termproject => Termproject 진행 사항 commit
+
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
                                                       주차별 개발 일정
