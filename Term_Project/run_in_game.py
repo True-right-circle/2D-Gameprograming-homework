@@ -3,9 +3,9 @@ import random
 from pico2d import*
 
 name='MainState'
+image=None
 
 class Background:
-    image=None
     
     def __init__(self):
         self.image=load_image('back_pink.png')
@@ -15,7 +15,7 @@ class Background:
 
 class Main_Char:
     def __init__(self):
-        self.x,self.y=50,90
+        self.x,self.y=50,80
         self.frame=0
         self.image=load_image('char_sheet.png')
 
@@ -35,14 +35,21 @@ def enter():
     
 def exit():
     global background,boy
-    del(background)
     del(boy)
+    del(background)
     
 def handle_events():
+    global running
     events=get_events()
     for event in events:
         if event.type==SDL_QUIT:
             game_framework.quit()
+        else:
+            if(event.type,event.key)==(SDL_KEYDOWN,SDLK_ESCAPE):
+                running=False
+                if(event.type,event.key)==(SDL_KEYDOWN,SDLK_ESCAPE):
+                    game_framework.quit()
+
             
 def update():
     boy.update()
@@ -51,9 +58,10 @@ def draw():
     while running:
         update()
         clear_canvas()
-        drawback()
+        background.draw()
         boy.draw()
         update_canvas()
+        handle_events()
         delay(0.05)
     
 def pause():
@@ -63,6 +71,3 @@ def resume():
     pass
 
 
-def drawback():
-    global background
-    background.draw()
