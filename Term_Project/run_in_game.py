@@ -17,10 +17,10 @@ class Main_Char:
     def __init__(self):
         self.x,self.y=50,80
         self.frame=0
-        self.image=load_image('char_sheet.png')
+        self.image=load_image('new_char_sheet.png')
 
     def update(self):
-        self.frame=random.randint(0,7)
+        self.frame=(self.frame+1)%8
         
     def draw(self):
         self.image.clip_draw(self.frame*100,0,100,100,self.x,self.y)
