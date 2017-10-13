@@ -61,7 +61,7 @@ class Boy:
         RIGHT_STAND: handle_right_stand
         }        
     def __init__(self):
-        self.x,self.y=0,90
+        self.x,self.y=random.randint(100,700),random.randint(90,500)
         self.frame= random.randint(0,7)
         self.dir=1
         self.run_frames=0
@@ -110,8 +110,9 @@ def handle_events():
 
 def update():
     global team
-    team[n].update()
-    
+    for i in range(1000):
+        team[i].update()
+        
 def draw():
     while running:
         global n
