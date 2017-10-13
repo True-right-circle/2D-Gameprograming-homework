@@ -56,7 +56,8 @@ def handle_mouseevents():
 
 def enter():
     global team,grass,boy,n,running,image,font,char_font
-    team=[Boy() for i in range(member)]
+    #team=[Boy() for i in range(member)]
+    team=create_team()
     grass = Grass()
     font=load_font('ENCR10B.TTF',50)
     char_font=load_font('ENCR10B.TTF',25)

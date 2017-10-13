@@ -8,7 +8,6 @@ member =5
 image = None
 font = None
 char_font = None
-team = None
 n = 0
 
 class Grass:
