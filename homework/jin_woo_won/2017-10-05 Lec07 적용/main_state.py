@@ -8,19 +8,28 @@ import title_state
 
 name = 'MainState'
 
-font = None
-char_font = None
-  
 
+  
+def handle_events():
+    global running
+    global team,n
+    events = get_events()
+    for event in events:
+        if event.type==SDL_QUIT:
+            running=False
+        elif event.type==SDL_KEYDOWN and event.key==SDLK_ESCAPE:
+            running=False
+        else:
+            team[n].handle_event(event)
+            
 
 def handle_mouseevents():
     global running,n,team
     select()
     events=get_events()
     for event in events:
-        global team
         if event.type==SDL_MOUSEMOTION:
-            team[n].x,team[n].y,=event.x,600-event.y
+            team[n].x,team[n].y,=event.x,600-event.y  
 
 
 def enter():
@@ -38,13 +47,6 @@ def exit():
     del(team)
     del(grass)
 
-def handle_events():
-    global team
-    events=get_events()
-    for event in events:
-        if event.type==SDL_QUIT:
-            game_framework.quit()
-
 def update():
     global team
     for i in range(member):
@@ -61,10 +63,11 @@ def draw():
         char_font.draw(team[n].x-50,team[n].y+50,'This Boy')
         char_font.draw(team[n].x-50,team[n].y-15,str(n))
         for i in range(member):
-            team[i].draw()   
+            team[i].draw() 
+        handle_mouseevents()
         update_canvas()
         delay(0.05)
-        handle_mouseevents()
+
         
 def pause():
     pass
@@ -89,6 +92,8 @@ def select():
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             running=False
             game_framework.change_state(title_state)
+        else:
+            team[n].handle_event(event)  
             
 if __name__=='__main__':
     main()
