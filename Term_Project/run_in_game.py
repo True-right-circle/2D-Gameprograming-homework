@@ -2,17 +2,23 @@ import game_framework
 import random
 from pico2d import*
 
+
 name='MainState'
 image=None
 jump_time=0.0
 jump_check=0.0
-
+speed=5.0
 class Background:
     def __init__(self):
         self.image=load_image('back_pink.png')
- 
+        self.x,self.y=400,300
+        
     def draw(self):
-        self.image.draw(400,300)
+        self.image.draw(self.x,self.y)
+    def update(self):
+        background.x-=speed
+        if(background.x<200):
+            background.x=550
 
 class Main_Char:
     def __init__(self):
@@ -23,8 +29,19 @@ class Main_Char:
         self.jump_image=load_image('jump_sheet.png')
 
     def update(self):
+        global jump,jump_time,jump_check,background
         self.run_frame=(self.run_frame+1)%8
         self.jump_frame=(self.jump_frame+1)%2
+        if(jump==False and jump_time<=2.0):
+            jump_time+=1.0
+            boy.y+=75.0
+            jump_check+=75.0
+        if(jump_time>=3.0):
+            jump=True
+            jump_time=0.0
+        if(jump_check>=0):
+            boy.y-=25.0
+            jump_check-=25.0
         
     def draw(self):
         global jump
@@ -64,18 +81,10 @@ def handle_events():
                     
         
 def update():
-    global jump,jump_time,jump_check
+    global jump,jump_time,jump_check,background
     boy.update()
-    if(jump==False and jump_time<=2.0):
-        jump_time+=1.0
-        boy.y+=75.0
-        jump_check+=75.0
-    if(jump_time>=3.0):
-        jump=True
-        jump_time=0.0
-    if(jump_check>=0):
-        boy.y-=25.0
-        jump_check-=25.0
+    background.update()
+    
          
 def draw():
     while running:
