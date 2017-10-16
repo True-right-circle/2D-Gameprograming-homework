@@ -8,6 +8,20 @@ image=None
 jump_time=0.0
 jump_check=0.0
 speed=5.0
+class nBackground:
+    def __init__(self):
+        self.image=load_image('back_pink.png')
+        self.x,self.y=1600,300
+        
+    def draw(self):
+        self.image.draw(self.x,self.y)
+        
+    def update(self):
+        if(nextbackground.x>-600):
+            nextbackground.x-=speed
+        elif(nextbackground.x<=-600):
+            nextbackground.x=1400
+
 class Background:
     def __init__(self):
         self.image=load_image('back_pink.png')
@@ -16,9 +30,11 @@ class Background:
     def draw(self):
         self.image.draw(self.x,self.y)
     def update(self):
-        background.x-=speed
-        if(background.x<200):
-            background.x=550
+        if(background.x>-600):
+            background.x-=speed
+        elif(background.x<=-600):
+            background.x=1400
+
 
 class Main_Char:
     def __init__(self):
@@ -52,18 +68,20 @@ class Main_Char:
             
     
 def enter():
-    global image,background,running,boy,jump
+    global image,background,running,boy,jump,nextbackground
     boy=Main_Char()
     background = Background()
+    nextbackground=nBackground()
     jump=True
     running=True
     image=None
 
     
 def exit():
-    global background,boy
+    global background,boy,nextbackground
     del(boy)
     del(background)
+    del(nextbackground)
     
 def handle_events():
     global running,jump,jump_time
@@ -84,13 +102,14 @@ def update():
     global jump,jump_time,jump_check,background
     boy.update()
     background.update()
-    
+    nextbackground.update()
          
 def draw():
     while running:
         update()
         clear_canvas()
         background.draw()
+        nextbackground.draw()
         boy.draw()
         update_canvas()
         handle_events()
