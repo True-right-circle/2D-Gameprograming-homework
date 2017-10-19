@@ -93,17 +93,27 @@ class Main_Char:
         global jump,jump_time,jump_check,background
         self.run_frame=(self.run_frame+1)%8
         self.jump_frame=(self.jump_frame+1)%2
-        if(jump==False and jump_time<=2.0):
-            jump_time+=1.0
-            boy.y+=95.0
-            jump_check+=95.0
+        #if(jump==False and jump_time<2.0):
+        #    jump_time+=1.0
+        #    boy.y+=105.0
+        #    jump_check+=105.0
+        #if(jump_time>=2.0):
+        #    jump=True
+        #    jump_time=0.0
+        if(jump==False and jump_time<3.0):
+            jump_time+=0.5
+            boy.y+=50.0
+            jump_check+=50.0
         if(jump_time>=3.0):
             jump=True
-            jump_time=0.0
         if(jump_check>=0):
-            boy.y-=35.0
-            jump_check-=35.0
-        
+            boy.y-=25.0
+            jump_check-=25.0
+        if(jump_time==4.0):
+             boy.y+=0.0
+             jump_check+=0.0
+        if(jump_check==0):
+             jump_time=0.0
     def draw(self):
         global jump
         if(jump==True):
@@ -141,7 +151,7 @@ def handle_events():
         if event.type==SDL_QUIT:
             game_framework.quit()
         elif(event.type,event.key)==(SDL_KEYDOWN,SDLK_SPACE):
-            jump=False
+             jump=False
         else:
             if(event.type,event.key)==(SDL_KEYDOWN,SDLK_ESCAPE):
                 running=False
