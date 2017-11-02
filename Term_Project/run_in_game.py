@@ -11,7 +11,7 @@ speed=5.0
 enemyspeed =18.0
 blockspeed=8.0
 
-class enemie:
+class enemy:
      def __init__(self):
         self.x,self.y=1400,90
         self.run_frame=0
@@ -23,7 +23,7 @@ class enemie:
          flying.x-=enemyspeed
          if(flying.x<0):
              flying.x=1400
-         
+     #def ebemykAI(self):    
      def draw(self):
          self.run_image.clip_draw(self.run_frame*100,0,100,100,self.x,self.y)
     
@@ -39,7 +39,9 @@ class breadblock:
              
      def draw(self):
         self.image.draw(self.x,self.y)
-        
+
+     #def bloackAI(self):
+          
 class grayblock:
      def __init__(self):
         self.x,self.y=1200,60
@@ -51,7 +53,9 @@ class grayblock:
              block2.x=1400
              
      def draw(self):
-        self.image.draw(self.x,self.y)         
+        self.image.draw(self.x,self.y)
+        
+     #def graybloackAI(self):
         
 class nBackground:
     def __init__(self):
@@ -127,7 +131,7 @@ def enter():
     boy=Main_Char()
     background = Background()
     nextbackground=nBackground()
-    flying=enemie()
+    flying=enemy()
     block1=breadblock()
     block2=grayblock()
     jump=True
