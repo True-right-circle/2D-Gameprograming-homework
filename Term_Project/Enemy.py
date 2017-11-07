@@ -6,7 +6,7 @@ blockspeed=8.0
 
 class enemy:
      def __init__(self):
-        self.x,self.y=1400,90
+        self.x,self.y=1400,(random.randint(9,13)*10)
         self.run_frame=0
         self.run_image=load_image('flying_sheet.png')
         
@@ -15,6 +15,7 @@ class enemy:
          self.x-=enemyspeed
          if(self.x<0):
              self.x=1400
+             self.y=(random.randint(8,20)*10)
      #def enemykAI(self):    
      def draw(self):
          self.run_image.clip_draw(self.run_frame*100,0,100,100,self.x,self.y)
