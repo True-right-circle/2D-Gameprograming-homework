@@ -23,7 +23,7 @@ class enemy:
          flying.x-=enemyspeed
          if(flying.x<0):
              flying.x=1400
-     #def ebemykAI(self):    
+     #def enemykAI(self):    
      def draw(self):
          self.run_image.clip_draw(self.run_frame*100,0,100,100,self.x,self.y)
     
