@@ -1,7 +1,7 @@
 import game_framework
 import random
 from pico2d import*
-
+from Background import*
 
 name='MainState'
 image=None
@@ -57,32 +57,6 @@ class grayblock:
         
      #def graybloackAI(self):
         
-class nBackground:
-    def __init__(self):
-        self.image=load_image('back_pink.png')
-        self.x,self.y=1600,300
-        
-    def draw(self):
-        self.image.draw(self.x,self.y)
-        
-    def update(self):
-        if(nextbackground.x>-600):
-            nextbackground.x-=speed
-        elif(nextbackground.x<=-600):
-            nextbackground.x=1400
-
-class Background:
-    def __init__(self):
-        self.image=load_image('back_pink.png')
-        self.x,self.y=400,300
-        
-    def draw(self):
-        self.image.draw(self.x,self.y)
-    def update(self):
-        if(background.x>-600):
-            background.x-=speed
-        elif(background.x<=-600):
-            background.x=1400
 
 
 class Main_Char:
