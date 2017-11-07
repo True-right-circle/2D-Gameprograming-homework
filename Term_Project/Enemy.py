@@ -16,7 +16,7 @@ class enemy:
          if(self.x<0):
              self.x=1400
              self.y=(random.randint(8,20)*10)
-     #def enemykAI(self):    
+ 
      def draw(self):
          self.run_image.clip_draw(self.run_frame*100,0,100,100,self.x,self.y)
     
