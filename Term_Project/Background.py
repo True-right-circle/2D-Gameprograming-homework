@@ -23,6 +23,7 @@ class Background:
         
     def draw(self):
         self.image.draw(self.x,self.y)
+
     def update(self):
         if(self.x>-600):
             self.x-=speed

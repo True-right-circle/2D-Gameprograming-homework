@@ -2,6 +2,8 @@ import game_framework
 import random
 from pico2d import*
 from Background import*
+from Enemy import*
+import time
 
 name='MainState'
 image=None
@@ -10,54 +12,8 @@ jump_check=0.0
 speed=5.0
 enemyspeed =18.0
 blockspeed=8.0
-
-class enemy:
-     def __init__(self):
-        self.x,self.y=1400,90
-        self.run_frame=0
-        self.run_image=load_image('flying_sheet.png')
-        
-     def update(self):
-         global flying
-         self.run_frame=(self.run_frame+1)%8
-         flying.x-=enemyspeed
-         if(flying.x<0):
-             flying.x=1400
-     #def enemykAI(self):    
-     def draw(self):
-         self.run_image.clip_draw(self.run_frame*100,0,100,100,self.x,self.y)
-    
-class breadblock:
-     def __init__(self):
-        self.x,self.y=1200,200
-        self.image=load_image('block1.png')
-        
-     def update(self):
-         block1.x-=enemyspeed
-         if(block1.x<-100):
-             block1.x=1400
-             
-     def draw(self):
-        self.image.draw(self.x,self.y)
-
-     #def bloackAI(self):
-          
-class grayblock:
-     def __init__(self):
-        self.x,self.y=1200,60
-        self.image=load_image('block2.png')
-        
-     def update(self):
-         block2.x-=blockspeed
-         if(block2.x<-100):
-             block2.x=1400
-             
-     def draw(self):
-        self.image.draw(self.x,self.y)
-        
-     #def graybloackAI(self):
-        
-
+now=0
+start_time = 0
 
 class Main_Char:
     def __init__(self):
@@ -101,7 +57,8 @@ class Main_Char:
             
     
 def enter():
-    global image,background,running,boy,jump,nextbackground,flying,block1,block2
+    global font,image,background,running,boy,jump,nextbackground,flying,block1,block2
+    font=load_font('ENCR10B.TTF',30)
     boy=Main_Char()
     background = Background()
     nextbackground=nBackground()
@@ -138,20 +95,26 @@ def handle_events():
                     
         
 def update():
-    global jump,jump_time,jump_check,background,flying,block1,block2
+    global jump,jump_time,jump_check,background,flying,block1,block2,now
     boy.update()
     background.update()
     nextbackground.update()
     flying.update()
     block1.update()
     block2.update()
-         
+
+
+   
 def draw():
+    start_time = time.time()
     while running:
+        end_time = time.time()
         update()
         clear_canvas()
         background.draw()
         nextbackground.draw()
+        font.draw(730,560,str(end_time - start_time))
+        font.draw(620,560,"Score:")
         boy.draw()
         flying.draw()
         block1.draw()
