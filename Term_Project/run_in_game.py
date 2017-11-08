@@ -24,9 +24,12 @@ class Main_Char:
         self.jump_image=load_image('jump_sheet.png')
 
     def update(self):
-        global jump,jump_time,jump_check,background
+        global jump,jump_time,jump_check,background ,running
         self.run_frame=(self.run_frame+1)%8
         self.jump_frame=(self.jump_frame+1)%2
+        if flying.y<=90 and flying.x == boy.x:
+            running=False
+            print('a')  
         #if(jump==False and jump_time<2.0):
         #    jump_time+=1.0
         #    boy.y+=105.0
@@ -48,6 +51,7 @@ class Main_Char:
              jump_check+=0.0
         if(jump_check==0):
              jump_time=0.0
+  
 
     def draw(self):
         global jump
@@ -55,6 +59,7 @@ class Main_Char:
             self.run_image.clip_draw(self.run_frame*100,0,100,100,self.x,self.y)
         elif(jump==False):
             self.jump_image.clip_draw(self.jump_frame*100,0,100,100,self.x,self.y)
+            
             
     
 def enter():
@@ -88,10 +93,7 @@ def handle_events():
             game_framework.quit()  
         elif(event.type,event.key)==(SDL_KEYDOWN,SDLK_SPACE):
              jump=False
-        else:
-            if flying.x==boy.x:
-                print('a')
-                running=False  
+        else:  
             if(event.type,event.key)==(SDL_KEYDOWN,SDLK_ESCAPE):
                 running=False
                 if(event.type,event.key)==(SDL_KEYDOWN,SDLK_ESCAPE):
@@ -106,6 +108,7 @@ def update():
     flying.update()
     block1.update()
     block2.update()
+
 
 
    
