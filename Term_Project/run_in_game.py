@@ -10,10 +10,9 @@ image=None
 jump_time=0.0
 jump_check=0.0
 speed=5.0
-enemyspeed =18.0
-blockspeed=8.0
 now=0
 start_time = 0
+check_time=0
 
 class Main_Char:
     def __init__(self):
@@ -24,12 +23,15 @@ class Main_Char:
         self.jump_image=load_image('jump_sheet.png')
 
     def update(self):
-        global jump,jump_time,jump_check,background ,running
+        global jump,jump_time,jump_check,background ,running,check_time
         self.run_frame=(self.run_frame+1)%8
         self.jump_frame=(self.jump_frame+1)%2
-        if flying.y<=90 and flying.x == boy.x:
+        if flying.y<=90 and flying.x == boy.x and boy.y<=90:
             running=False
-            print('a')  
+            font.draw(300,400,"Game Over")
+            font.draw(270,350,"Score : ")
+            font.draw(410,350,str(check_time))
+            font.draw(470,350,"Second ")
         #if(jump==False and jump_time<2.0):
         #    jump_time+=1.0
         #    boy.y+=105.0
@@ -114,13 +116,15 @@ def update():
    
 def draw():
     start_time = time.time()
+    global check_time
     while running:
         end_time = time.time()
-        update()
         clear_canvas()
         background.draw()
         nextbackground.draw()
-        font.draw(730,560,str(end_time - start_time))
+        update()
+        check_time=int(end_time - start_time)
+        font.draw(730,560,str(check_time))
         font.draw(620,560,"Score:")
         boy.draw()
         flying.draw()
@@ -128,7 +132,7 @@ def draw():
         block2.draw()
         update_canvas()
         handle_events()
-        delay(0.05)
+        delay(0.04)
     
 def pause():
     pass
