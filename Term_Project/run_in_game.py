@@ -35,13 +35,7 @@ class Main_Char:
             font.draw(270,350,"Score : ")
             font.draw(410,350,str(check_time))
             font.draw(470,350,"Second ")
-        #if(jump==False and jump_time<2.0):
-        #    jump_time+=1.0
-        #    boy.y+=105.0
-        #    jump_check+=105.0
-        #if(jump_time>=2.0):
-        #    jump=True
-        #    jump_time=0.0
+
         if(jump==False and jump_time<3.0):
             jump_time+=0.5
             boy.y+=50.0
@@ -63,7 +57,6 @@ class Main_Char:
             self.run_image.clip_draw(self.run_frame*100,0,100,100,self.x,self.y)
         elif(jump==False):
             self.jump_image.clip_draw(self.jump_frame*100,0,100,100,self.x,self.y)
-            self.jump_sound.play()
             
             
     
@@ -98,6 +91,7 @@ def handle_events():
             game_framework.quit()  
         elif(event.type,event.key)==(SDL_KEYDOWN,SDLK_SPACE):
              jump=False
+             boy.jump_sound.play()
         else:  
             if(event.type,event.key)==(SDL_KEYDOWN,SDLK_ESCAPE):
                 running=False
