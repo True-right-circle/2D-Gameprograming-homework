@@ -7,6 +7,7 @@ import time
 
 name='MainState'
 image=None
+jump_sound=None
 jump_time=0.0
 jump_check=0.0
 speed=5.0
@@ -21,6 +22,8 @@ class Main_Char:
         self.jump_frame=0
         self.run_image=load_image('new_char_sheet.png')
         self.jump_image=load_image('jump_sheet.png')
+        self.jump_sound=load_wav('pickup.wav')
+        self.jump_sound.set_volume(32)
 
     def update(self):
         global jump,jump_time,jump_check,background ,running,check_time
@@ -54,13 +57,13 @@ class Main_Char:
         if(jump_check==0):
              jump_time=0.0
   
-
     def draw(self):
         global jump
         if(jump==True):
             self.run_image.clip_draw(self.run_frame*100,0,100,100,self.x,self.y)
         elif(jump==False):
             self.jump_image.clip_draw(self.jump_frame*100,0,100,100,self.x,self.y)
+            self.jump_sound.play()
             
             
     
