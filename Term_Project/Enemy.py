@@ -1,8 +1,6 @@
 import random
 from run_in_game import*
 from pico2d import*
-enemyspeed =18.0
-blockspeed=8.0
 
 class enemy:
      def __init__(self):
@@ -10,7 +8,7 @@ class enemy:
         self.run_frame=0
         self.run_image=load_image('flying_sheet.png')
         
-     def update(self):
+     def update(self,enemyspeed,check_time):
          self.run_frame=(self.run_frame+1)%8
          self.x-=enemyspeed
          if(self.x<0):
@@ -25,8 +23,8 @@ class breadblock:
         self.x,self.y=1200,200
         self.image=load_image('block1.png')
         
-     def update(self):
-         self.x-=enemyspeed
+     def update(self,blockspeed,check_time):
+         self.x-=blockspeed
          if(self.x<-100):
              self.x=1400
              
@@ -40,8 +38,8 @@ class grayblock:
         self.x,self.y=1200,60
         self.image=load_image('block2.png')
         
-     def update(self):
-         self.x-=blockspeed
+     def update(self,blockspeed2,check_time):
+         self.x-=blockspeed2
          if(self.x<-100):
              self.x=1400
              

@@ -15,6 +15,9 @@ now=0
 start_time = 0
 check_time=0
 
+enemyspeed =18.0
+blockspeed=8.0
+blockspeed2 =5.0
 class Main_Char:
     def __init__(self):
         self.x,self.y=50,90
@@ -100,17 +103,18 @@ def handle_events():
                     
         
 def update():
-    global jump,jump_time,jump_check,background,flying,block1,block2,now
+    global jump,jump_time,jump_check,background,flying,block1,block2
     boy.update()
     background.update()
     nextbackground.update()
-    flying.update()
-    block1.update()
-    block2.update()
+    if(check_time>15):
+        flying.update(enemyspeed,check_time)
+    if(check_time>3):
+        block1.update(blockspeed,check_time)
+    if(check_time>8):
+        block2.update(blockspeed2,check_time)
 
 
-
-   
 def draw():
     start_time = time.time()
     global check_time
