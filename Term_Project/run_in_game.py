@@ -64,9 +64,11 @@ class Main_Char:
             
     
 def enter():
-    global font,image,background,running,boy,jump,nextbackground,flying,block1,block2
+    global cloud,sky,font,image,background,running,boy,jump,nextbackground,flying,block1,block2
     font=load_font('ENCR10B.TTF',30)
     boy=Main_Char()
+    cloud=Cloudground()
+    sky=SkyBackground()
     background = Background()
     nextbackground=nBackground()
     flying=enemy()
@@ -78,13 +80,15 @@ def enter():
 
     
 def exit():
-    global background,boy,nextbackground,flying,block1,block2
+    global cloud,sky,background,boy,nextbackground,flying,block1,block2
     del(boy)
     del(background)
     del(nextbackground)
     del(flying)
     del(block1)
     del(block2)
+    del(sky)
+    del(cloud)
     
 def handle_events():
     global running,jump,jump_time
@@ -105,6 +109,7 @@ def handle_events():
 def update():
     global jump,jump_time,jump_check,background,flying,block1,block2
     boy.update()
+    cloud.update()
     background.update()
     nextbackground.update()
     if(check_time>15):
@@ -121,6 +126,8 @@ def draw():
     while running:
         end_time = time.time()
         clear_canvas()
+        sky.draw()
+        cloud.draw()
         background.draw()
         nextbackground.draw()
         update()
