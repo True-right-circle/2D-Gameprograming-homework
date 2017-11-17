@@ -114,8 +114,8 @@ def update():
     cloud.update()
     background.update()
     nextbackground.update()
-    if(check_time>15):
-        flying.update(enemyspeed,check_time)
+    #if(check_time>15):
+    flying.update(enemyspeed,check_time)
     if(check_time>3):
         block1.update(blockspeed,check_time)
     if(check_time>8):

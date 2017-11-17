@@ -23,7 +23,7 @@ class nBackground:
 class Background:
     def __init__(self):
         self.image=load_image('back_tree.png')
-        self.x,self.y=400,-450
+        self.x,self.y=400,-420
         
     def draw(self):
         self.image.draw(self.x,self.y)
