@@ -1,36 +1,39 @@
 import random
 from run_in_game import*
 from pico2d import*
-speed=8.0
-cloudspeed=5.0
+speed=5.0
+cloudspeed=3.0
 class nBackground:
     def __init__(self):
         self.image=load_image('back_tree.png')
-        self.x,self.y=1950,430
+        #self.x,self.y=1950,430
         
     def draw(self):
-        self.image.draw(self.x,self.y)
+        pass
+        #self.image.draw(self.x,self.y)
         
     def update(self):
-        if(self.x>-1000):
-            self.x-=speed
-        elif(self.x<=-600):
-            self.x=1950
+        pass
+        #if(self.x>-1000):
+            #self.x-=speed
+        #elif(self.x<=-600):
+            #self.x=1950
 
 
 class Background:
     def __init__(self):
         self.image=load_image('back_tree.png')
-        self.x,self.y=400,430
+        self.x,self.y=400,-450
         
     def draw(self):
         self.image.draw(self.x,self.y)
 
     def update(self):
-        if(self.x>-1000):
-            self.x-=speed
-        elif(self.x<=-600):
-            self.x=1950
+        pass
+        #if(self.x>-1000):
+            #self.x-=speed
+        #elif(self.x<=-600):
+            #self.x=1950
             
 class SkyBackground:
     def __init__(self):

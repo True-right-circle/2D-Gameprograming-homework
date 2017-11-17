@@ -20,7 +20,7 @@ blockspeed=8.0
 blockspeed2 =5.0
 class Main_Char:
     def __init__(self):
-        self.x,self.y=50,90
+        self.x,self.y=120,80
         self.run_frame=0
         self.jump_frame=0
         self.run_image=load_image('new_char_sheet.png')
@@ -30,8 +30,8 @@ class Main_Char:
 
     def update(self):
         global jump,jump_time,jump_check,background ,running,check_time
-        self.run_frame=(self.run_frame+1)%8
-        self.jump_frame=(self.jump_frame+1)%2
+        self.run_frame=(self.run_frame+1)%6
+        self.jump_frame=(self.jump_frame+1)%6
         if flying.y<=90 and flying.x == boy.x and boy.y<=90:
             running=False
             font.draw(300,400,"Game Over")
@@ -40,14 +40,16 @@ class Main_Char:
             font.draw(470,350,"Second ")
 
         if(jump==False and jump_time<3.0):
-            jump_time+=0.5
-            boy.y+=50.0
-            jump_check+=50.0
+            jump_time+=0.6
+            boy.y+=20.0
+            boy.x-=10.0
+            jump_check+=40.0
         if(jump_time>=3.0):
             jump=True
         if(jump_check>=0):
-            boy.y-=25.0
-            jump_check-=25.0
+            boy.y-=10.0
+            boy.x+=5.0
+            jump_check-=20.0
         if(jump_time==4.0):
              boy.y+=0.0
              jump_check+=0.0
@@ -57,9 +59,9 @@ class Main_Char:
     def draw(self):
         global jump
         if(jump==True):
-            self.run_image.clip_draw(self.run_frame*100,0,100,100,self.x,self.y)
+            self.run_image.clip_draw(self.run_frame*100,0,100,55,self.x,self.y)
         elif(jump==False):
-            self.jump_image.clip_draw(self.jump_frame*100,0,100,100,self.x,self.y)
+            self.jump_image.clip_draw(self.jump_frame*100,0,100,55,self.x,self.y)
             
             
     
@@ -140,7 +142,8 @@ def draw():
         block2.draw()
         update_canvas()
         handle_events()
-        delay(0.04)
+        delay(0.05)
+
     
 def pause():
     pass
