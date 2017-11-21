@@ -17,7 +17,7 @@ class enemy:
          angle+=0.02
          self.run_frame=(self.run_frame+1)%8
          self.x=400+(radius*cos(angle))
-         self.y=-420+radius*sin(angle)
+         self.y=-480+radius*sin(angle)
          #if(self.x<0):
              #self.x=1400
              #self.y=(random.randint(8,20)*10)

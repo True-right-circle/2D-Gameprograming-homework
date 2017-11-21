@@ -20,7 +20,7 @@ blockspeed=8.0
 blockspeed2 =5.0
 class Main_Char:
     def __init__(self):
-        self.x,self.y=120,80
+        self.x,self.y=120,40
         self.run_frame=0
         self.jump_frame=0
         self.run_image=load_image('new_char_sheet.png')
@@ -109,9 +109,10 @@ def handle_events():
                     
         
 def update():
-    global jump,jump_time,jump_check,background,flying,block1,block2
+    global sky,jump,jump_time,jump_check,background,flying,block1,block2
     boy.update()
     cloud.update()
+    sky.update()
     background.update()
     nextbackground.update()
     #if(check_time>15):
