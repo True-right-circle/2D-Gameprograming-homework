@@ -20,7 +20,7 @@ blockspeed=8.0
 blockspeed2 =5.0
 class Main_Char:
     def __init__(self):
-        self.x,self.y=120,40
+        self.x,self.y=90,50
         self.run_frame=0
         self.jump_frame=0
         self.run_image=load_image('new_char_sheet.png')
@@ -42,13 +42,11 @@ class Main_Char:
         if(jump==False and jump_time<3.0):
             jump_time+=0.6
             boy.y+=20.0
-            boy.x-=10.0
             jump_check+=40.0
         if(jump_time>=3.0):
             jump=True
         if(jump_check>=0):
             boy.y-=10.0
-            boy.x+=5.0
             jump_check-=20.0
         if(jump_time==4.0):
              boy.y+=0.0
@@ -66,31 +64,28 @@ class Main_Char:
             
     
 def enter():
-    global cloud,sky,font,image,background,running,boy,jump,nextbackground,flying,block1,block2
+    global moun,font,image,background,running,boy,jump,flying,sun,moon
     font=load_font('ENCR10B.TTF',30)
     boy=Main_Char()
-    cloud=Cloudground()
-    sky=SkyBackground()
-    background = Background()
-    nextbackground=nBackground()
+    moun=Mountain(800,400)
+    moon=moon()
+    background = Background(800,400)
     flying=enemy()
-    block1=breadblock()
-    block2=grayblock()
+    sun=Sun()
     jump=True
     running=True
     image=None
 
     
 def exit():
-    global cloud,sky,background,boy,nextbackground,flying,block1,block2
+    global background,boy,flying,moun,sun,moon
     del(boy)
     del(background)
-    del(nextbackground)
+    del(moun)
     del(flying)
-    del(block1)
-    del(block2)
-    del(sky)
-    del(cloud)
+    del(sun)
+    del(moon)
+
     
 def handle_events():
     global running,jump,jump_time
@@ -105,22 +100,19 @@ def handle_events():
             if(event.type,event.key)==(SDL_KEYDOWN,SDLK_ESCAPE):
                 running=False
                 if(event.type,event.key)==(SDL_KEYDOWN,SDLK_ESCAPE):
+                    #running=False
                     game_framework.quit()
                     
         
 def update():
-    global sky,jump,jump_time,jump_check,background,flying,block1,block2
+    global moun,jump,jump_time,jump_check,background,flying,sun,moon
     boy.update()
-    cloud.update()
-    sky.update()
+    sun.update()
+    moon.update()
+    moun.update()
     background.update()
-    nextbackground.update()
-    #if(check_time>15):
     flying.update(enemyspeed,check_time)
-    if(check_time>3):
-        block1.update(blockspeed,check_time)
-    if(check_time>8):
-        block2.update(blockspeed2,check_time)
+
 
 
 def draw():
@@ -129,18 +121,16 @@ def draw():
     while running:
         end_time = time.time()
         clear_canvas()
-        sky.draw()
-        cloud.draw()
+        moun.draw()
+        sun.draw()
+        moon.draw()
         background.draw()
-        nextbackground.draw()
         update()
         check_time=int(end_time - start_time)
-        font.draw(730,560,str(check_time))
-        font.draw(620,560,"Score:")
+        font.draw(730,350,str(check_time))
+        font.draw(620,350,"Score:")
         boy.draw()
-        flying.draw()
-        block1.draw()
-        block2.draw()
+        #flying.draw()
         update_canvas()
         handle_events()
         delay(0.05)
