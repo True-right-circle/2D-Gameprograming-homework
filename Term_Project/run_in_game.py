@@ -47,7 +47,7 @@ class Main_Char:
              jump_check+=0.0
         if(jump_check==0):
              jump_time=0.0
-    
+             
     def draw(self):
         global jump
         if(jump==True):
@@ -65,14 +65,15 @@ class Main_Char:
             
     
 def enter():
-    global green,moun,font,image,background,running,boy,jump,flying,sun,moon
+    global block,green,moun,font,image,background,running,boy,jump,flying,sun,moon
     font=load_font('ENCR10B.TTF',30)
     boy=Main_Char()
     moun=Mountain(800,400)
-    moon=moon()
+    moon=Moon()
     background = Background(800,400)
     flying=enemy()
     green=G_enemy()
+    block=Block()
     sun=Sun()
     jump=True
     running=True
@@ -80,7 +81,7 @@ def enter():
 
     
 def exit():
-    global green,background,boy,flying,moun,sun,moon
+    global block,green,background,boy,flying,moun,sun,moon,font,image
     del(boy)
     del(background)
     del(moun)
@@ -88,6 +89,9 @@ def exit():
     del(sun)
     del(moon)
     del(green)
+    del(font)
+    del(block)
+    del(image)
 
     
 def handle_events():
@@ -103,8 +107,9 @@ def handle_events():
             if(event.type,event.key)==(SDL_KEYDOWN,SDLK_ESCAPE):
                 running=False
                 if(event.type,event.key)==(SDL_KEYDOWN,SDLK_ESCAPE):
-                    #running=False
+                    running=False
                     game_framework.quit()
+                    #game_framework.change_state(Title)
 
 def collide(a,b):
     left_a,bottom_a,right_a,top_a=a.get_bb()
@@ -120,12 +125,13 @@ def collide(a,b):
     
         
 def update():
-    global green,running,moun,jump,jump_time,jump_check,background,flying,sun,moon,boy,enemy
+    global block,green,running,moun,jump,jump_time,jump_check,background,flying,sun,moon,boy,enemy
     boy.update()
     sun.update()
     moon.update()
     moun.update()
     background.update()
+    block.update(enemyspeed)
     green.update(enemyspeed)
     flying.update(enemyspeed)
     if collide(flying,boy):
@@ -141,8 +147,13 @@ def update():
         font.draw(410,150,str(check_time))
         font.draw(470,150,"Second ")
 
-
-
+    if collide(block,boy):
+        running=False
+        font.draw(300,200,"Game Over")
+        font.draw(270,150,"Score : ")
+        font.draw(410,150,str(check_time))
+        font.draw(470,150,"Second ")
+        
 def draw():
     start_time = time.time()
     global check_time
@@ -160,6 +171,8 @@ def draw():
         boy.draw()
         flying.draw()
         green.draw()
+        block.draw()
+        block.draw_bb()
         green.draw_bb()
         flying.draw_bb()
         boy.draw_bb()

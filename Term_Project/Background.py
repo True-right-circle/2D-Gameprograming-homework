@@ -67,7 +67,7 @@ class Sun:
     def draw(self):
         self.image.draw(self.x,self.y)
         
-class moon:
+class Moon:
     def __init__(self):
         self.x,self.y=-100,-100
         self.run_frame=0
@@ -82,3 +82,4 @@ class moon:
         
     def draw(self):
         self.image.draw(self.x,self.y)
+
