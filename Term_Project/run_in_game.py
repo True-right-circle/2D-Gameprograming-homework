@@ -15,7 +15,7 @@ now=0
 start_time = 0
 check_time=0
 
-enemyspeed =18.0
+enemyspeed =9.0
 blockspeed=8.0
 blockspeed2 =5.0
 class Main_Char:
@@ -56,17 +56,23 @@ class Main_Char:
             self.jump_image.clip_draw(self.jump_frame*100,0,100,55,self.x,self.y)
 
     def get_bb(self):
-        return self.x-5,self.y-5,self.x+5,self.y+15        
+        return self.x-8,self.y-8,self.x+8,self.y+18
+    
+    def draw_bb(self):
+        draw_rectangle(*self.get_bb())
+    
+
             
     
 def enter():
-    global moun,font,image,background,running,boy,jump,flying,sun,moon
+    global green,moun,font,image,background,running,boy,jump,flying,sun,moon
     font=load_font('ENCR10B.TTF',30)
     boy=Main_Char()
     moun=Mountain(800,400)
     moon=moon()
     background = Background(800,400)
     flying=enemy()
+    green=G_enemy()
     sun=Sun()
     jump=True
     running=True
@@ -74,13 +80,14 @@ def enter():
 
     
 def exit():
-    global background,boy,flying,moun,sun,moon
+    global green,background,boy,flying,moun,sun,moon
     del(boy)
     del(background)
     del(moun)
     del(flying)
     del(sun)
     del(moon)
+    del(green)
 
     
 def handle_events():
@@ -113,14 +120,21 @@ def collide(a,b):
     
         
 def update():
-    global running,moun,jump,jump_time,jump_check,background,flying,sun,moon,boy,enemy
+    global green,running,moun,jump,jump_time,jump_check,background,flying,sun,moon,boy,enemy
     boy.update()
     sun.update()
     moon.update()
     moun.update()
     background.update()
+    green.update(enemyspeed)
     flying.update(enemyspeed)
     if collide(flying,boy):
+        running=False
+        font.draw(300,200,"Game Over")
+        font.draw(270,150,"Score : ")
+        font.draw(410,150,str(check_time))
+        font.draw(470,150,"Second ")
+    if collide(green,boy):
         running=False
         font.draw(300,200,"Game Over")
         font.draw(270,150,"Score : ")
@@ -145,6 +159,10 @@ def draw():
         font.draw(620,350,"Score:")
         boy.draw()
         flying.draw()
+        green.draw()
+        green.draw_bb()
+        flying.draw_bb()
+        boy.draw_bb()
         update_canvas()
         handle_events()
         delay(0.05)
