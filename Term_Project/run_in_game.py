@@ -89,9 +89,8 @@ def exit():
     del(sun)
     del(moon)
     del(green)
-    del(font)
     del(block)
-    del(image)
+
 
     
 def handle_events():
@@ -134,6 +133,7 @@ def update():
     block.update(enemyspeed)
     green.update(enemyspeed)
     flying.update(enemyspeed)
+    
     if collide(flying,boy):
         running=False
         font.draw(300,200,"Game Over")
@@ -165,19 +165,21 @@ def draw():
         moon.draw()
         background.draw()
         update()
+
         check_time=int(end_time - start_time)
-        font.draw(730,350,str(check_time))
-        font.draw(620,350,"Score:")
         boy.draw()
         flying.draw()
         green.draw()
         block.draw()
-        block.draw_bb()
-        green.draw_bb()
-        flying.draw_bb()
-        boy.draw_bb()
+        #block.draw_bb()
+        #green.draw_bb()
+        #flying.draw_bb()
+        #boy.draw_bb()
         update_canvas()
         handle_events()
+
+        font.draw(730,350,str(check_time))
+        font.draw(620,350,"Score:")
         delay(0.05)
 
     
