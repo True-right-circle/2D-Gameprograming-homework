@@ -41,7 +41,7 @@ class Main_Char:
                 jump=True
         if(jump==True  and  boy.y>40):
                 for i in range(1,10):
-                    boy.y-=i*0.3
+                    boy.y-=i*0.4
 
              
     def draw(self):
