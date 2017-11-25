@@ -11,16 +11,16 @@ jump_sound=None
 jump_time=0.0
 jump_check=0.0
 speed=5.0
-now=0
+jump_p=0
 start_time = 0
 check_time=0
 
-enemyspeed =9.0
-blockspeed=8.0
-blockspeed2 =5.0
+enemyspeed =14.0
+blockspeed=18.0
+blockspeed2 =15.0
 class Main_Char:
     def __init__(self):
-        self.x,self.y=90,50
+        self.x,self.y=90,40
         self.run_frame=0
         self.jump_frame=0
         self.run_image=load_image('new_char_sheet.png')
@@ -29,24 +29,20 @@ class Main_Char:
         self.jump_sound.set_volume(32)
 
     def update(self):
-        global jump,jump_time,jump_check,background ,running,check_time
+        global jump_p,jump,jump_time,jump_check,background ,running,check_time
         self.run_frame=(self.run_frame+1)%6
         self.jump_frame=(self.jump_frame+1)%6
 
-        if(jump==False and jump_time<3.0):
-            jump_time+=0.6
-            boy.y+=40.0
-            jump_check+=40.0
-        if(jump_time>=3.0):
-            jump=True
-        if(jump_check>=0):
-            boy.y-=20.0
-            jump_check-=20.0
-        if(jump_time==4.0):
-             boy.y+=0.0
-             jump_check+=0.0
-        if(jump_check==0):
-             jump_time=0.0
+        if(jump==False):
+            if boy.y<145:
+                for i in range(1,10):
+                    boy.y+=i*0.3
+            if boy.y>=145:
+                jump=True
+        if(jump==True  and  boy.y>40):
+                for i in range(1,10):
+                    boy.y-=i*0.3
+
              
     def draw(self):
         global jump
@@ -130,9 +126,9 @@ def update():
     moon.update()
     moun.update()
     background.update()
-    block.update(enemyspeed)
-    green.update(enemyspeed)
-    flying.update(enemyspeed)
+    #block.update(enemyspeed)
+    #green.update(enemyspeed)
+    #flying.update(enemyspeed)
     
     if collide(flying,boy):
         running=False

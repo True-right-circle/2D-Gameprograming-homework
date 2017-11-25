@@ -11,6 +11,7 @@ m_angle=360.0
 radius=800
 angle=0
 
+time=0
 
 class Background:
     def __init__(self,w,h):
@@ -45,13 +46,15 @@ class Mountain:
         self.left=(self.left+m_speed)%self.moring_image.w
         
     def draw(self):
-        if self.noon_frame<=1:
-            self.noon_frame+=0.002
+        if self.noon_frame<=1 and self.night_frame<=0:
+            self.noon_frame+=0.005
         if self.noon_frame>=1 and self.night_frame<=1:
-            self.night_frame+=0.002
+            self.night_frame+=0.005
         if self.night_frame>=1:
             self.noon_frame=0
-            self.night_frame=0
+        if self.noon_frame<=0 and self.night_frame>0:
+            self.night_frame-=0.005
+            
         x=int(self.left)
         w=min(self.moring_image.w-x,self.screen_width)
         
@@ -78,11 +81,11 @@ class Sun:
         self.image=load_image('sun.png')
 
     def update(self):
+        global time
         global radius,angle
         angle+=0.01
-        self.x=200+(radius*cos(angle))
-        self.y=-480+radius*sin(angle)
-
+        self.x=300+(radius*cos(angle))
+        self.y=-480+(radius*sin(angle))
         
     def draw(self):
         self.image.draw(self.x,self.y)
@@ -94,10 +97,10 @@ class Moon:
         self.image=load_image('moon.png')
         
     def update(self):
-        global radius,m_angle,check_suny
+        global radius,m_angle,check_suny,time
 
-        m_angle-=0.01
-        self.x=200+(radius*cos(m_angle))
+        m_angle-=0.01  
+        self.x=300+(radius*cos(m_angle))
         self.y=-480-(radius*sin(m_angle))
         
     def draw(self):
