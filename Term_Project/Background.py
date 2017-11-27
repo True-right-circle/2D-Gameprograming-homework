@@ -6,12 +6,6 @@ from math import*
 
 g_speed=5.0
 m_speed=3.0
-m_angle=360.0
-
-radius=800
-angle=0
-
-time=0
 
 class Background:
     def __init__(self,w,h):
@@ -76,16 +70,21 @@ class Mountain:
         
 class Sun:
     def __init__(self):
-        self.x,self.y=-100,-100
+        self.x,self.y=200,100
         self.run_frame=0
-        self.image=load_image('sun.png')
+        self.radius =800
+        self.angle=0
+        self.check_sun=1
+        self.check_moon=1
+        self.sun_image=load_image('sun.png')
 
     def update(self):
-        global time
-        global radius,angle
-        angle+=0.01
-        self.x=300+(radius*cos(angle))
-        self.y=-480+(radius*sin(angle))
+        self.angle+=0.008
+        self.x=300+(self.radius*cos(self.angle))
+        self.y=-480+(self.radius*sin(self.angle))
+        if(self.x<-70):
+            self.angle=0
+            self.x=300+(self.radius*cos(self.angle))
         
     def draw(self):
         self.image.draw(self.x,self.y)
@@ -94,14 +93,14 @@ class Moon:
     def __init__(self):
         self.x,self.y=-100,-100
         self.run_frame=0
+        self.radius =800
+        self.m_angle=360.0
         self.image=load_image('moon.png')
         
     def update(self):
-        global radius,m_angle,check_suny,time
-
-        m_angle-=0.01  
-        self.x=300+(radius*cos(m_angle))
-        self.y=-480-(radius*sin(m_angle))
+        self.m_angle-=0.008  
+        self.x=300+(self.radius*cos(self.m_angle))
+        self.y=-480-(self.radius*sin(self.m_angle))
         
     def draw(self):
         self.image.draw(self.x,self.y)

@@ -1,5 +1,7 @@
 import game_framework
 import random
+import title_state
+import Background
 from pico2d import*
 from Background import*
 from Enemy import*
@@ -9,7 +11,7 @@ name='MainState'
 image=None
 jump_sound=None
 jump_time=0.0
-jump_check=0.0
+jump_check=1.0
 speed=5.0
 jump_p=0
 start_time = 0
@@ -34,14 +36,14 @@ class Main_Char:
         self.jump_frame=(self.jump_frame+1)%6
 
         if(jump==False):
-            if boy.y<145:
-                for i in range(1,10):
+            if boy.y<135:
+                for i in range(1,13):
                     boy.y+=i*0.3
-            if boy.y>=145:
+            if boy.y>=135:
                 jump=True
         if(jump==True  and  boy.y>40):
-                for i in range(1,10):
-                    boy.y-=i*0.4
+            for i in range(1,13):
+                boy.y-=i*0.5
 
              
     def draw(self):
@@ -90,7 +92,7 @@ def exit():
 
     
 def handle_events():
-    global running,jump,jump_time
+    global running,jump,jump_time,jump_check
     events=get_events()
     for event in events:
         if event.type==SDL_QUIT:
@@ -103,8 +105,8 @@ def handle_events():
                 running=False
                 if(event.type,event.key)==(SDL_KEYDOWN,SDLK_ESCAPE):
                     running=False
-                    game_framework.quit()
-                    #game_framework.change_state(Title)
+                    #game_framework.quit()
+                    game_framework.change_state(title_state)
 
 def collide(a,b):
     left_a,bottom_a,right_a,top_a=a.get_bb()
