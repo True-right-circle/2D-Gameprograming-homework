@@ -6,8 +6,15 @@ name ='TitleState'
 image=None
 
 def enter():
-    global image
+    global image,arrow,arrow2
     image = load_image('title.png')
+    arrow= load_image('arrowRight.png')
+    arrow2= load_image('arrowRight.png')
+    arrow.x=415
+    arrow.y=145
+    arrow2.x=415
+    arrow2.y=70
+    
 
 def exit():
     global image
@@ -24,13 +31,24 @@ def handle_events():
             elif(event.type,event.key)==(SDL_KEYDOWN,SDLK_SPACE):
                 game_framework.change_state(run_in_game)
 
+def update():
+    global arrow,arrow2
+    if arrow.x<430:
+        arrow.x+=0.025
+    if arrow.x>=430:
+        arrow.x=415
+    if arrow2.x<430:
+        arrow2.x+=0.025
+    if arrow2.x>=430:
+        arrow2.x=415   
 def draw():
     clear_canvas()
+    update()
     image.draw(400,300)
+    arrow.draw(arrow.x,arrow.y)
+    arrow2.draw(arrow2.x,arrow2.y)
     update_canvas()
 
-def update():
-    pass
 def pause():
     pass
 def resume():
