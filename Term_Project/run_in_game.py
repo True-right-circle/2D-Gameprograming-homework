@@ -129,8 +129,8 @@ def update():
     moun.update()
     background.update()
     #block.update(enemyspeed)
-    #green.update(enemyspeed)
-    #flying.update(enemyspeed)
+    green.update(enemyspeed)
+    flying.update(enemyspeed)
     
     if collide(flying,boy):
         running=False
@@ -169,10 +169,10 @@ def draw():
         flying.draw()
         green.draw()
         block.draw()
-        #block.draw_bb()
-        #green.draw_bb()
-        #flying.draw_bb()
-        #boy.draw_bb()
+        block.draw_bb()
+        green.draw_bb()
+        flying.draw_bb()
+        boy.draw_bb()
         update_canvas()
         handle_events()
 
