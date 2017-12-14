@@ -4,9 +4,6 @@ from pico2d import*
 import time
 from math import*
 
-g_speed=5.0
-m_speed=3.0
-
 class Background:
     def __init__(self,w,h):
         self.image=load_image('ground.png')
@@ -14,9 +11,13 @@ class Background:
         self.left = 0
         self.screen_width = w
         self.screen_height = h
+        self.g_speed=5.0
+        self.checktime=0
         
     def update(self):
-        self.left=(self.left+g_speed)%self.image.w
+        self.checktime+=0.0001
+        self.left=(self.left+self.g_speed)%self.image.w
+        self.g_speed+=self.checktime/10
         
     def draw(self):
         x=int(self.left)
@@ -35,9 +36,13 @@ class Mountain:
         self.left = 0
         self.screen_width = w
         self.screen_height = h
+        self.m_speed=3.0
+        self.checktime=0
         
     def update(self):
-        self.left=(self.left+m_speed)%self.moring_image.w
+        self.checktime+=0.0001
+        self.left=(self.left+self.m_speed)%self.moring_image.w
+        self.m_speed+=self.checktime/10
         
     def draw(self):
         if self.noon_frame<=1 and self.night_frame<=0:

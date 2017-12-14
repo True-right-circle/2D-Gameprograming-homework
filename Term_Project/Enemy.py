@@ -5,7 +5,7 @@ from math import*
 
 class enemy:
      def __init__(self):
-        self.x,self.y=850,(random.randint(7,10)*10)
+        self.x,self.y=850,50
         self.run_frame=0
         self.run_image=load_image('flying_sheet.png')
         
@@ -14,6 +14,7 @@ class enemy:
          self.run_frame=(self.run_frame+1)%8
          if(self.x<-100):
               self.x=850
+              self.y=random.randint(6,9)*10
 
      def draw(self):
          self.run_image.clip_draw(self.run_frame*100,0,100,100,self.x,self.y)
@@ -29,8 +30,8 @@ class G_enemy:
         self.run_frame=0
         self.run_image=load_image('green_sheet.png')
         
-     def update(self,enemyspeed):
-         self.x-=enemyspeed
+     def update(self,enemyspeed2):
+         self.x-=enemyspeed2
          self.run_frame=(self.run_frame+1)%8
          if(self.x<-50):
               self.x=1050

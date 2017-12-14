@@ -22,8 +22,8 @@ jump_p=0
 start_time = 0
 check_time=0
 check_des=0
-enemyspeed =8.0
-enemyspeed2 =6.0
+enemyspeed =6.0
+enemyspeed2 =3.0
 arrowcheck=2
 checkrank=1
 class Main_Char:
@@ -69,7 +69,7 @@ class Main_Char:
       
 class Arrow:
      def __init__(self):
-        self.x,self.y=-30,40
+        self.x,self.y=-300,40
         self.run_frame=0
         self.run_image=load_image('Arrow.png')
         self.checktime=0
@@ -82,7 +82,7 @@ class Arrow:
              for i in range(1,10):
                  self.speed+=i*0.3
          if(self.x>800):
-             self.x=-30
+             self.x=-300
              arrowcheck=2            
      def draw(self):
          self.run_image.draw(self.x,self.y)
@@ -92,10 +92,12 @@ class Arrow:
           draw_rectangle(*self.get_bb())
           
 def enter():
-    global checkrank,arrow,green,moun,font,image,background,running,boy,jump,flying,sun,moon
+    global enemyspeed,enemyspeed2,checkrank,arrow,green,moun,font,image,background,running,boy,jump,flying,sun,moon
     font=load_font('ENCR10B.TTF',30)
     boy=Main_Char()
     checkrank=1
+    enemyspeed =6.0
+    enemyspeed2 =3.0
     moun=Mountain(800,400)
     moon=Moon()
     background = Background(800,400)
@@ -179,13 +181,15 @@ def draw_ranking():
     L=0
     i = 0
     for score in score_data:
-        font.draw(50,350-L,'%d. Score:%3d'% (i+1,score['Score']),(250,250,0))
+        font.draw(40,350-L,'%d. Score:%.1f'% (i+1,score['Score']),(255,94,0))
         i+=1
         L+=50
         
 def update():
-    global checkrank,arrowcheck,arrow,check_des,green,running,moun,jump,jump_time,jump_check,background,flying,sun,moon,boy,enemy
+    global enemyspeed,enemyspeed2,checkrank,arrowcheck,arrow,check_des,green,running,moun,jump,jump_time,jump_check,background,flying,sun,moon,boy,enemy
     boy.update()
+    enemyspeed +=int(check_time)/5000
+    enemyspeed2 +=int(check_time)/5000
     sun.update()
     moon.update()
     moun.update()
@@ -198,21 +202,21 @@ def update():
     font.draw(550,330,"Score:")
 
     if collide(flying,arrow):
-        flying.x+=100
-        arrow.x=-30
+        flying.x+=50
+        arrow.x=-300
         arrowcheck=2
     if collide(green,arrow):
-        green.x+=100
-        arrow.x=-30
+        green.x+=50
+        arrow.x=-300
         arrowcheck=2
         
     if collide(flying,boy):
         running=False
-        font.draw(300,200,"Game Over")
-        font.draw(250,150,"Score : ")
-        font.draw(390,150,"%0.1f"%check_time)
-        font.draw(470,150,"Second ")
-        font.draw(490,100,"Press ESC ")
+        font.draw(330,200,"Game Over")
+        font.draw(280,150,"Score : ")
+        font.draw(420,150,"%0.1f"%check_time)
+        font.draw(500,150,"Second ")
+        font.draw(520,100,"Press ESC ")
         if checkrank>0:
             loadscore()
             checkrank=-1
@@ -220,11 +224,11 @@ def update():
 
     if collide(green,boy):
         running=False
-        font.draw(300,200,"Game Over")
-        font.draw(250,150,"Score : ")
-        font.draw(390,150,"%0.1f"%check_time)
-        font.draw(470,150,"Second ")
-        font.draw(490,100,"Press ESC ")
+        font.draw(330,200,"Game Over")
+        font.draw(280,150,"Score : ")
+        font.draw(420,150,"%0.1f"%check_time)
+        font.draw(500,150,"Second ")
+        font.draw(520,100,"Press ESC ")
         if checkrank>0:
             loadscore()
             checkrank=-1
