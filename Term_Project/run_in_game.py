@@ -16,6 +16,7 @@ speed=5.0
 jump_p=0
 start_time = 0
 check_time=0
+check_des=0
 
 enemyspeed =8.0
 enemyspeed2 =6.0
@@ -35,8 +36,9 @@ class Main_Char:
         global jump_p,jump,jump_time,jump_check,background ,running,check_time
         self.run_frame=(self.run_frame+1)%6
         self.jump_frame=(self.jump_frame+1)%6
-
+        
         if(jump==False):
+            jump_check=2
             if boy.y<135:
                 for i in range(1,13):
                     boy.y+=i*0.3
@@ -45,8 +47,9 @@ class Main_Char:
         if(jump==True  and  boy.y>40):
             for i in range(1,13):
                 boy.y-=i*0.5
-
-             
+        if(jump==True and boy.y<=40):
+            jump_check=1
+            
     def draw(self):
         global jump
         if(jump==True):
@@ -96,7 +99,7 @@ def handle_events():
     for event in events:
         if event.type==SDL_QUIT:
             game_framework.quit()  
-        elif(event.type,event.key)==(SDL_KEYDOWN,SDLK_SPACE):
+        elif(event.type,event.key)==(SDL_KEYDOWN,SDLK_SPACE) and jump_check==1:
              jump=False
              boy.jump_sound.play()
         else:  
@@ -121,7 +124,7 @@ def collide(a,b):
     
         
 def update():
-    global block,green,running,moun,jump,jump_time,jump_check,background,flying,sun,moon,boy,enemy
+    global check_des,block,green,running,moun,jump,jump_time,jump_check,background,flying,sun,moon,boy,enemy
     boy.update()
     sun.update()
     moon.update()
@@ -134,11 +137,14 @@ def update():
     font.draw(550,330,"Score:")
     
     if collide(flying,boy):
-        running=False
-        font.draw(300,200,"Game Over")
-        font.draw(270,150,"Score : ")
-        font.draw(410,150,"%0.1f"%check_time)
-        font.draw(470,150,"Second ")
+        #running=False
+        #font.draw(300,200,"Game Over")
+        #font.draw(270,150,"Score : ")
+        #font.draw(410,150,"%0.1f"%check_time)
+        #font.draw(470,150,"Second ")
+        if check_des<80:
+            check_des+=5
+        flying.x+=check_des
     if collide(green,boy):
         running=False
         font.draw(300,200,"Game Over")
