@@ -22,8 +22,8 @@ jump_p=0
 start_time = 0
 check_time=0
 check_des=0
-enemyspeed =6.0
-enemyspeed2 =3.0
+enemyspeed =8.0
+enemyspeed2 =6.0
 arrowcheck=2
 checkrank=1
 class Main_Char:
@@ -34,7 +34,9 @@ class Main_Char:
         self.run_image=load_image('new_char_sheet.png')
         self.jump_image=load_image('jump_sheet.png')
         self.jump_sound=load_wav('pickup.wav')
+        self.shoot_sound=load_wav('shoot.wav')
         self.jump_sound.set_volume(32)
+        self.shoot_sound.set_volume(35)
 
     def update(self):
         global jump_p,jump,jump_time,jump_check,background ,running,check_time
@@ -92,10 +94,14 @@ class Arrow:
           draw_rectangle(*self.get_bb())
           
 def enter():
-    global enemyspeed,enemyspeed2,checkrank,arrow,green,moun,font,image,background,running,boy,jump,flying,sun,moon
+    global game_over,main_sound,enemyspeed,enemyspeed2,checkrank,arrow,green,moun,font,image,background,running,boy,jump,flying,sun,moon
     font=load_font('ENCR10B.TTF',30)
     boy=Main_Char()
     checkrank=1
+    main_sound=load_music('main.mp3')
+    game_over=load_wav('gameover.wav')
+    main_sound.set_volume(35)
+    game_over.set_volume(35)
     enemyspeed =6.0
     enemyspeed2 =3.0
     moun=Mountain(800,400)
@@ -108,10 +114,12 @@ def enter():
     jump=True
     running=True
     image=None
+    main_sound.repeat_play()
+
 
     
 def exit():
-    global arrow,green,background,boy,flying,moun,sun,moon,font,image
+    global game_over,main_sound,arrow,green,background,boy,flying,moun,sun,moon,font,image
     del(boy)
     del(background)
     del(moun)
@@ -120,6 +128,8 @@ def exit():
     del(moon)
     del(green)
     del(arrow)
+    del(main_sound)
+    del(game_over)
 
 
     
@@ -135,6 +145,7 @@ def handle_events():
         elif(event.type,event.key)==(SDL_KEYDOWN,SDLK_a) and jump_check==1:
             if arrowcheck<3:
                 arrow.x=90
+                boy.shoot_sound.play()
             arrowcheck+=1
         else:  
             if(event.type,event.key)==(SDL_KEYDOWN,SDLK_ESCAPE):
@@ -186,7 +197,7 @@ def draw_ranking():
         L+=50
         
 def update():
-    global enemyspeed,enemyspeed2,checkrank,arrowcheck,arrow,check_des,green,running,moun,jump,jump_time,jump_check,background,flying,sun,moon,boy,enemy
+    global game_over,main_sound,flying,enemyspeed,enemyspeed2,checkrank,arrowcheck,arrow,check_des,green,running,moun,jump,jump_time,jump_check,background,flying,sun,moon,boy,enemy
     boy.update()
     enemyspeed +=int(check_time)/5000
     enemyspeed2 +=int(check_time)/5000
@@ -200,15 +211,20 @@ def update():
     flying.update(enemyspeed)
     font.draw(680,330,"%0.1f"%check_time)
     font.draw(550,330,"Score:")
+    if running == False:
+        main_sound.stop()
 
     if collide(flying,arrow):
         flying.x+=50
         arrow.x=-300
         arrowcheck=2
+        
+        flying.hit_sound.play()
     if collide(green,arrow):
         green.x+=50
         arrow.x=-300
         arrowcheck=2
+        flying.hit_sound.play()
         
     if collide(flying,boy):
         running=False
@@ -220,6 +236,7 @@ def update():
         if checkrank>0:
             loadscore()
             checkrank=-1
+            game_over.play()
         draw_ranking()
 
     if collide(green,boy):
@@ -232,6 +249,7 @@ def update():
         if checkrank>0:
             loadscore()
             checkrank=-1
+            game_over.play()
         draw_ranking()
         
 def draw():

@@ -6,10 +6,15 @@ name ='TitleState'
 image=None
 
 def enter():
-    global image,arrow,arrow2
+    global state,title_sound,image,arrow,arrow2
     image = load_image('title.png')
+    state=1
     arrow= load_image('arrowRight.png')
     arrow2= load_image('arrowRight.png')
+    title_sound=load_wav('title.wav')
+    if state ==1:
+        title_sound.repeat_play()
+    title_sound.set_volume(35)
     arrow.x=415
     arrow.y=145
     arrow2.x=415
@@ -17,10 +22,12 @@ def enter():
     
 
 def exit():
-    global image
+    global title_sound,image
     del(image)
+    del(title_sound)
 
 def handle_events():
+    global state
     events=get_events()
     for event in events:
         if event.type == SDL_QUIT:
@@ -32,7 +39,7 @@ def handle_events():
                 game_framework.change_state(run_in_game)
 
 def update():
-    global arrow,arrow2
+    global title_sound,arrow,arrow2
     if arrow.x<430:
         arrow.x+=0.025
     if arrow.x>=430:
@@ -40,7 +47,8 @@ def update():
     if arrow2.x<430:
         arrow2.x+=0.025
     if arrow2.x>=430:
-        arrow2.x=415   
+        arrow2.x=415
+    
 def draw():
     clear_canvas()
     update()

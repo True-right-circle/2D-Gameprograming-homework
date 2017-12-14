@@ -8,7 +8,8 @@ class enemy:
         self.x,self.y=850,50
         self.run_frame=0
         self.run_image=load_image('flying_sheet.png')
-        
+        self.hit_sound=load_wav('hit.wav')
+        self.hit_sound.set_volume(35)
      def update(self,enemyspeed):
          self.x-=enemyspeed
          self.run_frame=(self.run_frame+1)%8
@@ -40,7 +41,7 @@ class G_enemy:
          self.run_image.clip_draw(self.run_frame*100,0,100,100,self.x,self.y)
          
      def get_bb(self):
-          return self.x-6,self.y-26,self.x+14,self.y+1
+          return self.x-4,self.y-22,self.x+11,self.y-2
      def draw_bb(self):
           draw_rectangle(*self.get_bb())
 
