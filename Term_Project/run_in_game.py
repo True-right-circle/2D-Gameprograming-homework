@@ -10,7 +10,7 @@ from pico2d import*
 from Background import*
 from Enemy import*
 import time
-import Rank_State
+
 
 name='MainState'
 image=None
@@ -25,7 +25,7 @@ check_des=0
 enemyspeed =8.0
 enemyspeed2 =6.0
 arrowcheck=2
-
+checkrank=1
 class Main_Char:
     def __init__(self):
         self.x,self.y=90,40
@@ -92,9 +92,10 @@ class Arrow:
           draw_rectangle(*self.get_bb())
           
 def enter():
-    global arrow,green,moun,font,image,background,running,boy,jump,flying,sun,moon
+    global checkrank,arrow,green,moun,font,image,background,running,boy,jump,flying,sun,moon
     font=load_font('ENCR10B.TTF',30)
     boy=Main_Char()
+    checkrank=1
     moun=Mountain(800,400)
     moon=Moon()
     background = Background(800,400)
@@ -133,15 +134,6 @@ def handle_events():
             if arrowcheck<3:
                 arrow.x=90
             arrowcheck+=1
-        elif(event.type,event.key)==(SDL_KEYDOWN,SDLK_r):
-            f = open('Ranking_file', 'r')
-            score_data = json.load(f)
-            f.close()
-            score_data.append({"Time": check_time})
-            f = open('Ranking_file', 'w')
-            json.dump(score_data, f)
-            f.close()
-            draw_ranking()
         else:  
             if(event.type,event.key)==(SDL_KEYDOWN,SDLK_ESCAPE):
                 running=False
@@ -150,6 +142,15 @@ def handle_events():
                     #game_framework.quit()
                     game_framework.change_state(title_state)
 
+def loadscore():
+    f = open('Ranking_file', 'r')
+    score_data = json.load(f)
+    f.close()
+    score_data.append({"Score": round(check_time,2)})
+    f = open('Ranking_file', 'w')
+    json.dump(score_data, f)
+    f.close()
+    
 def collide(a,b):
     left_a,bottom_a,right_a,top_a=a.get_bb()
     left_b,bottom_b, right_b,top_b=b.get_bb()
@@ -175,15 +176,15 @@ def draw_ranking():
 
     bubble_sort(score_data)
     score_data = score_data[:5]
-
+    L=0
     i = 0
     for score in score_data:
-        font.draw(100,400-40*i,'%d. Score:%10d'
-                  % (i+1,score['Score']), (250,250,250))
+        font.draw(50,350-L,'%d. Score:%3d'% (i+1,score['Score']),(250,250,0))
         i+=1
+        L+=50
         
 def update():
-    global arrowcheck,arrow,check_des,green,running,moun,jump,jump_time,jump_check,background,flying,sun,moon,boy,enemy
+    global checkrank,arrowcheck,arrow,check_des,green,running,moun,jump,jump_time,jump_check,background,flying,sun,moon,boy,enemy
     boy.update()
     sun.update()
     moon.update()
@@ -212,6 +213,10 @@ def update():
         font.draw(390,150,"%0.1f"%check_time)
         font.draw(470,150,"Second ")
         font.draw(490,100,"Press ESC ")
+        if checkrank>0:
+            loadscore()
+            checkrank=-1
+        draw_ranking()
 
     if collide(green,boy):
         running=False
@@ -220,6 +225,10 @@ def update():
         font.draw(390,150,"%0.1f"%check_time)
         font.draw(470,150,"Second ")
         font.draw(490,100,"Press ESC ")
+        if checkrank>0:
+            loadscore()
+            checkrank=-1
+        draw_ranking()
         
 def draw():
     start_time = time.time()
