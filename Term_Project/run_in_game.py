@@ -175,18 +175,18 @@ def update():
     if collide(flying,boy):
         running=False
         font.draw(300,200,"Game Over")
-        font.draw(270,150,"Score : ")
-        font.draw(410,150,"%0.1f"%check_time)
-        font.draw(490,150,"Second ")
+        font.draw(250,150,"Score : ")
+        font.draw(390,150,"%0.1f"%check_time)
+        font.draw(470,150,"Second ")
+        font.draw(490,100,"Press ESC ")
 
     if collide(green,boy):
         running=False
         font.draw(300,200,"Game Over")
-        font.draw(270,150,"Score : ")
-        font.draw(410,150,"%0.1f"%check_time)
-        font.draw(490,150,"Second ")
-
-
+        font.draw(250,150,"Score : ")
+        font.draw(390,150,"%0.1f"%check_time)
+        font.draw(470,150,"Second ")
+        font.draw(490,100,"Press ESC ")
         
 def draw():
     start_time = time.time()
