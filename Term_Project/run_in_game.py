@@ -1,3 +1,7 @@
+import random
+import json
+import os
+
 import game_framework
 import random
 import title_state
@@ -6,6 +10,7 @@ from pico2d import*
 from Background import*
 from Enemy import*
 import time
+import Rank_State
 
 name='MainState'
 image=None
@@ -128,6 +133,15 @@ def handle_events():
             if arrowcheck<3:
                 arrow.x=90
             arrowcheck+=1
+        elif(event.type,event.key)==(SDL_KEYDOWN,SDLK_r):
+            f = open('Ranking_file', 'r')
+            score_data = json.load(f)
+            f.close()
+            score_data.append({"Time": check_time})
+            f = open('Ranking_file', 'w')
+            json.dump(score_data, f)
+            f.close()
+            draw_ranking()
         else:  
             if(event.type,event.key)==(SDL_KEYDOWN,SDLK_ESCAPE):
                 running=False
@@ -147,7 +161,26 @@ def collide(a,b):
 
     return True
     
-    
+
+def bubble_sort(data):
+    for i in range(0, len(data)):
+         for j in range(0,len(data)):
+            if(data[i]['Score']>data[j]['Score']):
+                data[i], data[j] = data[j], data[i]
+                
+def draw_ranking():
+    f = open('Ranking_file', 'r')
+    score_data = json.load(f)
+    f.close()
+
+    bubble_sort(score_data)
+    score_data = score_data[:5]
+
+    i = 0
+    for score in score_data:
+        font.draw(100,400-40*i,'%d. Score:%10d'
+                  % (i+1,score['Score']), (250,250,250))
+        i+=1
         
 def update():
     global arrowcheck,arrow,check_des,green,running,moun,jump,jump_time,jump_check,background,flying,sun,moon,boy,enemy
@@ -190,7 +223,7 @@ def update():
         
 def draw():
     start_time = time.time()
-    global check_time
+    global check_time,moun
     while running:
         end_time = time.time()
         clear_canvas()

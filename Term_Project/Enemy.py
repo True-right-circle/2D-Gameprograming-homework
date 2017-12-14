@@ -5,7 +5,7 @@ from math import*
 
 class enemy:
      def __init__(self):
-        self.x,self.y=850,(random.randint(6,10)*10)
+        self.x,self.y=850,(random.randint(7,10)*10)
         self.run_frame=0
         self.run_image=load_image('flying_sheet.png')
         
