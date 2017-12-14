@@ -17,7 +17,8 @@ jump_p=0
 start_time = 0
 check_time=0
 
-enemyspeed =14.0
+enemyspeed =8.0
+enemyspeed2 =6.0
 blockspeed=18.0
 blockspeed2 =15.0
 class Main_Char:
@@ -54,13 +55,11 @@ class Main_Char:
             self.jump_image.clip_draw(self.jump_frame*100,0,100,55,self.x,self.y)
 
     def get_bb(self):
-        return self.x-8,self.y-8,self.x+8,self.y+18
+        return self.x-8,self.y-3,self.x+8,self.y+13
     
     def draw_bb(self):
         draw_rectangle(*self.get_bb())
-    
-
-            
+      
     
 def enter():
     global block,green,moun,font,image,background,running,boy,jump,flying,sun,moon
@@ -131,25 +130,27 @@ def update():
     #block.update(enemyspeed)
     green.update(enemyspeed)
     flying.update(enemyspeed)
+    font.draw(680,330,"%0.1f"%check_time)
+    font.draw(550,330,"Score:")
     
     if collide(flying,boy):
         running=False
         font.draw(300,200,"Game Over")
         font.draw(270,150,"Score : ")
-        font.draw(410,150,str(check_time))
+        font.draw(410,150,"%0.1f"%check_time)
         font.draw(470,150,"Second ")
     if collide(green,boy):
         running=False
         font.draw(300,200,"Game Over")
         font.draw(270,150,"Score : ")
-        font.draw(410,150,str(check_time))
+        font.draw(410,150,"%0.1f"%check_time)
         font.draw(470,150,"Second ")
 
     if collide(block,boy):
         running=False
         font.draw(300,200,"Game Over")
         font.draw(270,150,"Score : ")
-        font.draw(410,150,str(check_time))
+        font.draw(410,150,"%0.1f"%check_time)
         font.draw(470,150,"Second ")
         
 def draw():
@@ -163,8 +164,7 @@ def draw():
         moon.draw()
         background.draw()
         update()
-
-        check_time=int(end_time - start_time)
+        check_time=(end_time - start_time)
         boy.draw()
         flying.draw()
         green.draw()
@@ -175,9 +175,6 @@ def draw():
         boy.draw_bb()
         update_canvas()
         handle_events()
-
-        font.draw(730,350,str(check_time))
-        font.draw(620,350,"Score:")
         delay(0.05)
 
     

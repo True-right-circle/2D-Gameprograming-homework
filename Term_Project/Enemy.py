@@ -3,8 +3,6 @@ from run_in_game import*
 from pico2d import*
 from math import*
 
-
-
 class enemy:
      def __init__(self):
         self.x,self.y=850,60#(random.randint(5,10)*10)
@@ -21,7 +19,7 @@ class enemy:
          self.run_image.clip_draw(self.run_frame*100,0,100,100,self.x,self.y)
          
      def get_bb(self):
-          return self.x-6,self.y-18,self.x+14,self.y+5
+          return self.x-3,self.y-18,self.x+11,self.y+5
      def draw_bb(self):
           draw_rectangle(*self.get_bb())
     
