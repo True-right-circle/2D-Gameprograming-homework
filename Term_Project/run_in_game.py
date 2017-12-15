@@ -199,16 +199,16 @@ def draw_ranking():
 def update():
     global game_over,main_sound,flying,enemyspeed,enemyspeed2,checkrank,arrowcheck,arrow,check_des,green,running,moun,jump,jump_time,jump_check,background,flying,sun,moon,boy,enemy
     boy.update()
-    #enemyspeed +=int(check_time)/5000
-    #enemyspeed2 +=int(check_time)/5000
+    enemyspeed +=int(check_time)/5000
+    enemyspeed2 +=int(check_time)/5000
     sun.update()
     moon.update()
     moun.update()
     background.update()
     if arrowcheck>2:
         arrow.update()
-    #green.update(enemyspeed2)
-    #flying.update(enemyspeed)
+    green.update(enemyspeed2)
+    flying.update(enemyspeed)
     font.draw(680,330,"%0.1f"%check_time)
     font.draw(550,330,"Score:")
     if running == False:
@@ -265,8 +265,8 @@ def draw():
         update()
         check_time=(end_time - start_time)
         boy.draw()
-        #flying.draw()
-        #green.draw()
+        flying.draw()
+        green.draw()
         #green.draw_bb()
         arrow.draw()
         #arrow.draw_bb()
