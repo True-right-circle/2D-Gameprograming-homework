@@ -84,28 +84,41 @@ class Sun:
         self.image=load_image('sun.png')
 
     def update(self):
-        self.angle+=0.01
+        self.check_sun+=1
+        if self.check_sun<210:
+            self.angle+=0.01
         self.x=300+(self.radius*cos(self.angle))
         self.y=-480+(self.radius*sin(self.angle))
-        #if(self.x<-70):
-         #   self.angle=0
-          #  self.x=300+(self.radius*cos(self.angle))
+        if(self.x<-70):
+           self.angle=0
+           self.x=300+(self.radius*cos(self.angle))
+        if self.check_sun>=620:
+            self.check_sun=1
         
     def draw(self):
         self.image.draw(self.x,self.y)
         
 class Moon:
     def __init__(self):
-        self.x,self.y=-100,-100
+        self.x,self.y=200,100
         self.run_frame=0
         self.radius =800
-        self.m_angle=360.0
+        self.angle=0
+        self.check_sun=1
+        self.check_moon=1
         self.image=load_image('moon.png')
         
     def update(self):
-        self.m_angle-=0.01  
-        self.x=300+(self.radius*cos(self.m_angle))
-        self.y=-480-(self.radius*sin(self.m_angle))
+        self.check_sun+=1
+        if self.check_sun>210 and self.check_sun<=420:
+            self.angle+=0.01
+        self.x=300+(self.radius*cos(self.angle))
+        self.y=-480+(self.radius*sin(self.angle))
+        if(self.x<-70):
+           self.angle=0
+           self.x=300+(self.radius*cos(self.angle))
+        if self.check_sun>=620:
+            self.check_sun=1
         
     def draw(self):
         self.image.draw(self.x,self.y)

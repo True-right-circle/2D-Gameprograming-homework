@@ -21,7 +21,7 @@ class enemy:
          self.run_image.clip_draw(self.run_frame*100,0,100,100,self.x,self.y)
          
      def get_bb(self):
-          return self.x-3,self.y-18,self.x+11,self.y+5
+          return self.x-4,self.y-18,self.x+8,self.y+3
      def draw_bb(self):
           draw_rectangle(*self.get_bb())
     
